@@ -2,23 +2,46 @@ import requests
 
 def call_director_menu(debug, login, password):
     status, id = requests.director_authentication(login, password)
+    # TODO Во всех селектах добавить вывод через функцию вывода таблиц
     if status:
         while True:
             print('#'*30)
-            input_ = input('Введите действие:\n1)\n2)\n3)\n4)\n')
+            input_ = input('Введите действие:\n1) Посмотреть штрафы сотрудников\n2) Добавить сотрудника\n3) Удалить сотрудника\n4) Вывести пациентов\n5) Вывести все услуги\n6) Выход\n')
+            if input_ == '1':
+                requests.print_table( requests.select_sotrud_fines(debug),[1,2,3,4,5,6,7] )
+
+            elif input_ == '2':
+                requests.add_sotrud(debug),[1,2,3,4,5,6]
+
+            elif input_ == '3':
+                requests.delete_sotrud(debug)
+            elif input_ == '4':
+                requests.print_table( requests.select_patient(debug),[1,2,3,4,5,6] )
+            elif input_ == '5':
+                requests.print_table( requests.select_services(debug),[1,2,3] )
+            elif input_ == '6':
+                break
+            else:
+                print(print('Выбрано несуществующее меню. Попробуйте ещё раз...'))
     else:
         return False
 
 def call_registrate_menu(debug, login, password):
     status, id = requests.registrate_authentication(login, password)
+    # TODO Во всех селектах добавить вывод через функцию вывода таблиц
     if status:
         while True:
             print('#' * 30)
             input_ = input('Введите действие:\n1) Посмотреть сотрудников\n2) Посмотреть пациентов\n3) Посмотреть услуги\n4) Редактировать сотрудников\n5) Редактировать услуги\n6) Выход\n')
+
             if input_ == '1':
-                print(requests.select_sotrud(debug))
+                # Вывод таблицы     |     Запрос таблицы           |  Названия столбцов
+                requests.print_table( requests.select_sotrud(debug),[1,2,3,4,5,6,7] )
+
             elif input_ == '2':
-                print(requests.select_patient(debug))
+                # Вывод таблицы     |     Запрос таблицы           |  Названия столбцов
+                requests.print_table( requests.select_patient(debug),[1,2,3,4,5,6] )
+
             elif input_ == '3':
                 requests.select_services(debug)
             elif input_ == '4':
@@ -34,6 +57,7 @@ def call_registrate_menu(debug, login, password):
 
 def call_doctor_menu(debug, login, password):
     status, id = requests.doctor_authentication(login, password)
+    # TODO Во всех селектах добавить вывод через функцию вывода таблиц
     if status:
         while True:
             print('#' * 30)
@@ -41,7 +65,8 @@ def call_doctor_menu(debug, login, password):
             if input_ == '1':
                 requests.select_patient(debug)
             elif input_ == '2':
-                requests.select_history_patient(debug)
+                # Функция для примера запроса с условием
+                requests.print_table(requests.select_history_patient(debug),[1,2,3,4,5,6])
             elif input_ == '3':
                 requests.select_contr_patient(debug)
             elif input_ == '4':
@@ -57,6 +82,7 @@ def call_doctor_menu(debug, login, password):
 
 def call_patient_menu(debug, login, password):
     status, id = requests.patient_authentication(login, password)
+    # TODO Во всех селектах добавить вывод через функцию вывода таблиц
     if status:
         while True:
             print('#' * 30)
